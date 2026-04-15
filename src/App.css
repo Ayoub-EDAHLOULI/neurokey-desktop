@@ -33,9 +33,14 @@
     --strengthStrong: #30d158;
   }
 
+  html,
+  body,
+  #root {
+    background-color: transparent !important;
+  }
+
   body {
-    @apply bg-background text-text antialiased;
-    /* This prevents the user from highlighting random UI text like a website */
+    @apply text-text antialiased;
     user-select: none;
   }
 }

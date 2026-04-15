@@ -1,18 +1,28 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SidebarLayout from "./layouts/SidebarLayout";
 
-function App() {
+// Import our new pages
+import Vault from "./pages/Vault";
+import Wallet from "./pages/Wallet";
+import BreachRadar from "./pages/BreachRadar";
+import Settings from "./pages/Settings";
+
+export default function App() {
   return (
-    <SidebarLayout>
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-text mb-2">
-            Welcome to NeuroKey Desktop
-          </h2>
-          <p className="text-subText">Your offline-first vault is ready.</p>
-        </div>
-      </div>
-    </SidebarLayout>
+    // BrowserRouter wraps our entire app, enabling instant, offline navigation
+    <BrowserRouter>
+      <SidebarLayout>
+        <Routes>
+          {/* This automatically redirects the user to the Vault when they open the app */}
+          <Route path="/" element={<Navigate to="/vault" replace />} />
+
+          {/* Our application routes */}
+          <Route path="/vault" element={<Vault />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/radar" element={<BreachRadar />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </SidebarLayout>
+    </BrowserRouter>
   );
 }
-
-export default App;
