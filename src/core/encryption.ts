@@ -1,12 +1,27 @@
 import CryptoJS from "crypto-js";
-import { Store } from "@tauri-apps/plugin-store";
+import { Store, load } from "@tauri-apps/plugin-store";
 import { v4 as uuidv4 } from "uuid";
 
 const ITERATIONS = 5000;
 const KEY_SIZE = 256 / 32;
 
-// Initialize the Tauri local storage file
-const store = new Store("neurokey_secure.dat");
+// Keep a single instance of the store in memory
+let _storeInstance: Store | null = null;
+
+const getStore = async (): Promise<Store> => {
+  if (!_storeInstance) {
+    try {
+      _storeInstance = await load("neurokey_secure.dat", {
+        autoSave: false,
+        defaults: {},
+      });
+    } catch (error) {
+      console.error("Failed to load Tauri store:", error);
+      throw error;
+    }
+  }
+  return _storeInstance;
+};
 
 export const deriveKey = (password: string, salt: string): string => {
   const key = CryptoJS.PBKDF2(password, salt, {
@@ -42,17 +57,33 @@ export const saveSecureItem = async (
   key: string,
   value: string,
 ): Promise<void> => {
-  await store.set(key, value);
-  await store.save(); // Tauri requires explicitly saving the file to disk
+  try {
+    const store = await getStore();
+    await store.set(key, value);
+    await store.save();
+  } catch (error) {
+    console.error(`Failed to save secure item (${key}):`, error);
+  }
 };
 
 export const getSecureItem = async (key: string): Promise<string | null> => {
-  return (await store.get<string>(key)) || null;
+  try {
+    const store = await getStore();
+    return (await store.get<string>(key)) || null;
+  } catch (error) {
+    console.error(`Failed to get secure item (${key}):`, error);
+    return null;
+  }
 };
 
 export const clearSecureStore = async (): Promise<void> => {
-  await store.clear();
-  await store.save();
+  try {
+    const store = await getStore();
+    await store.clear();
+    await store.save();
+  } catch (error) {
+    console.error("Failed to clear secure store:", error);
+  }
 };
 
 export const generateSalt = (): string => {
