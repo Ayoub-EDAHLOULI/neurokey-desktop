@@ -44,3 +44,18 @@ Before running this project, you must install:
 ```bash
 git clone [https://github.com/Ayoub-EDAHLOULI/neurokey-desktop.git](https://github.com/Ayoub-EDAHLOULI/neurokey-desktop.git)
 cd neurokey-desktop
+```
+
+2. Install frontend dependencies:
+
+npm install
+
+3. Start the development server and boot the native desktop window:
+
+npm run tauri dev
+
+4. Build for production (Generates .msi, .exe, or .dmg installers):
+
+npm run tauri build
+
+Built with ❤️ by Ayoub Edahlouli.
