@@ -58,4 +58,5 @@ npm run tauri dev
 
 npm run tauri build
 
-Built with ❤️ by Ayoub Edahlouli.
+
+*Built with ❤️ by AYOUB EDAHLOULI*
