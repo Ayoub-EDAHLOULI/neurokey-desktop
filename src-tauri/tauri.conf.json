@@ -15,7 +15,8 @@
         "title": "neurokey-desktop",
         "width": 1024,
         "height": 768,
-        "decorations": false
+        "decorations": false,
+        "transparent": true
       }
     ],
     "security": {
