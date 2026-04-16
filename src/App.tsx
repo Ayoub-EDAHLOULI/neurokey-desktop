@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 // Import pages
 import Vault from "./pages/Vault";
 import Wallet from "./pages/Wallet";
+import Generator from "./pages/Generator";
 import BreachRadar from "./pages/BreachRadar";
 import Settings from "./pages/Settings";
 import AddPassword from "./pages/AddPassword";
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/vault" replace />} />
           <Route path="/vault" element={<Vault />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/generator" element={<Generator />} />
           <Route path="/radar" element={<BreachRadar />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/add-password" element={<AddPassword />} />

@@ -1,4 +1,4 @@
-import { Shield, CreditCard, Radar, Settings } from "lucide-react";
+import { Shield, CreditCard, Radar, Settings, Sparkles } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import TitleBar from "../components/TitleBar";
 
@@ -8,7 +8,7 @@ export default function SidebarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen w-screen bg-background flex overflow-hidden relative select-none font-sans">
+    <div className="h-screen w-screen bg-background flex overflow-hidden relative">
       <TitleBar />
 
       <aside className="w-64 bg-card border-r border-border flex flex-col pt-8 z-40">
@@ -26,6 +26,13 @@ export default function SidebarLayout({
             icon={<CreditCard size={20} />}
             label="Digital Wallet"
           />
+          <NavLink
+            to="/generator"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-inputBg"
+          >
+            <Sparkles size={20} />
+            <span>Generator</span>
+          </NavLink>
           <NavItem
             to="/radar"
             icon={<Radar size={20} />}
