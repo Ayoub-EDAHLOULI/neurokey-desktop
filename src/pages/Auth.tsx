@@ -20,6 +20,7 @@ import {
   persistVault,
 } from "../core/encryption";
 import { useVaultStore } from "../store/useVaultStore";
+import CustomAlert from "../components/CustomAlert";
 
 // Mocking the router navigate function for now
 export default function Auth({ onUnlock }: { onUnlock: () => void }) {
@@ -36,6 +37,18 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
     password: "",
     confirmPassword: "",
   });
+
+  // 👇 NEW: Alert State
+  const [alertConfig, setAlertConfig] = useState({
+    visible: false,
+    title: "",
+    message: "",
+    type: "info" as any,
+    buttons: [] as any[],
+  });
+
+  const closeAlert = () =>
+    setAlertConfig((prev) => ({ ...prev, visible: false }));
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -140,18 +153,33 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
     }
   };
 
-  const handleWipeVault = async () => {
-    if (
-      window.confirm(
-        "WARNING: This will permanently delete your encrypted vault. Continue?",
-      )
-    ) {
-      await clearSecureStore();
-      clearVault(); // Wipe the RAM state
-      setMode(1);
-      setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-      setErrors({});
-    }
+  const handleWipeVault = () => {
+    setAlertConfig({
+      visible: true,
+      title: "Wipe Vault?",
+      message:
+        "WARNING: This will permanently delete your encrypted vault and all saved data. This action cannot be undone. Continue?",
+      type: "warning",
+      buttons: [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Wipe Data",
+          style: "destructive",
+          onPress: async () => {
+            await clearSecureStore();
+            clearVault(); // Wipe the RAM state
+            setMode(1);
+            setFormData({
+              name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            });
+            setErrors({});
+          },
+        },
+      ],
+    });
   };
 
   if (isLoading)
@@ -292,6 +320,15 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
           )}
         </div>
       </motion.div>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        type={alertConfig.type}
+        buttons={alertConfig.buttons}
+        onClose={closeAlert}
+      />
     </div>
   );
 }
