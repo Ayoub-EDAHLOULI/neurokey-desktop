@@ -9,6 +9,7 @@ import Vault from "./pages/Vault";
 import Wallet from "./pages/Wallet";
 import BreachRadar from "./pages/BreachRadar";
 import Settings from "./pages/Settings";
+import AddPassword from "./pages/AddPassword";
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/radar" element={<BreachRadar />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/add-password" element={<AddPassword />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>
