@@ -19,9 +19,11 @@ import {
   clearSecureStore,
   persistVault,
 } from "../core/encryption";
+import { useVaultStore } from "../store/useVaultStore";
 
 // Mocking the router navigate function for now
 export default function Auth({ onUnlock }: { onUnlock: () => void }) {
+  const { setItems, clearVault } = useVaultStore();
   const [mode, setMode] = useState<0 | 1>(0); // 0 = Login, 1 = Signup
   const [isLoading, setIsLoading] = useState(true);
 
@@ -99,14 +101,13 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
       const token = encryptData("VALID_TOKEN", key);
 
       if (token) {
-        // Queue the data in memory...
         await saveSecureItem("user_email", formData.email);
         await saveSecureItem("vault_salt", salt);
         await saveSecureItem("vault_validation", token);
-
-        // Lock it to the hard drive in ONE clean operation!
+        await saveSecureItem("vault_data", JSON.stringify([])); // Create an empty vault array
         await persistVault();
 
+        setItems([]); // Ensure RAM is empty
         onUnlock();
       }
     } else {
@@ -123,6 +124,14 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
       const decrypted = decryptData(token, key);
 
       if (decrypted === "VALID_TOKEN") {
+        // Load the passwords from the hard drive into RAM!
+        const savedData = await getSecureItem("vault_data");
+        if (savedData) {
+          setItems(JSON.parse(savedData));
+        } else {
+          setItems([]);
+        }
+
         onUnlock();
       } else {
         setIsLoading(false);
@@ -138,6 +147,7 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
       )
     ) {
       await clearSecureStore();
+      clearVault(); // Wipe the RAM state
       setMode(1);
       setFormData({ name: "", email: "", password: "", confirmPassword: "" });
       setErrors({});
