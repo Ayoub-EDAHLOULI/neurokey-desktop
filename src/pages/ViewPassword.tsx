@@ -112,7 +112,7 @@ export default function ViewPassword() {
           <X size={20} />
         </button>
         <button
-          onClick={() => console.log("Navigate to edit page")}
+          onClick={() => navigate(`/edit-password/${item.id}`)}
           className="flex items-center gap-2 text-primary hover:text-blue-400 font-medium transition-colors"
         >
           <Edit2 size={16} /> Edit

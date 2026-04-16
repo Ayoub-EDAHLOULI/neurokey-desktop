@@ -11,6 +11,7 @@ import BreachRadar from "./pages/BreachRadar";
 import Settings from "./pages/Settings";
 import AddPassword from "./pages/AddPassword";
 import ViewPassword from "./pages/ViewPassword";
+import EditPassword from "./pages/EditPassword";
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/add-password" element={<AddPassword />} />
           <Route path="/view-password/:id" element={<ViewPassword />} />
+          <Route path="/edit-password/:id" element={<EditPassword />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>
