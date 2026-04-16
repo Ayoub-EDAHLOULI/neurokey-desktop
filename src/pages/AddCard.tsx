@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreditCard as CardIcon } from "lucide-react";
+import { CreditCard as CardIcon, Eye, EyeOff } from "lucide-react";
 import { useVaultStore } from "../store/useVaultStore";
 import CreditCard from "../components/CreditCard";
 import CustomAlert from "../components/CustomAlert";
@@ -18,6 +18,7 @@ export default function AddCard() {
     "visa",
   );
   const [notes, setNotes] = useState("");
+  const [showCvv, setShowCvv] = useState(false);
 
   const [alertConfig, setAlertConfig] = useState({
     visible: false,
@@ -89,7 +90,7 @@ export default function AddCard() {
 
       {/* SCROLLABLE CONTENT */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-6 custom-scrollbar">
-        <div className="mx-auto space-y-8 w-full min-w-0 max-w-2xl">
+        <div className="mx-auto space-y-8 w-full min-w-0">
           {/* 1. LIVE PREVIEW */}
           <div className="flex justify-center mb-8">
             <div className="w-full max-w-[400px]">
@@ -171,7 +172,7 @@ export default function AddCard() {
                   CVV
                 </label>
                 <input
-                  type="password"
+                  type={showCvv ? "text" : "password"}
                   placeholder="123"
                   value={cvv}
                   onChange={(e) =>
@@ -180,6 +181,13 @@ export default function AddCard() {
                   maxLength={4}
                   className="flex-1 bg-transparent border-none outline-none h-12 text-text"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowCvv((v) => !v)}
+                  className="text-subText hover:text-text transition-colors"
+                >
+                  {showCvv ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </div>
           </section>
