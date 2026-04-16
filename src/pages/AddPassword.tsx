@@ -142,7 +142,7 @@ export default function AddPassword() {
 
       {/* SCROLLABLE FORM */}
       <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
-        <div className="max-w-2xl mx-auto space-y-8">
+        <div className=" mx-auto space-y-8">
           {/* ICON PICKER */}
           <section>
             <h2 className="text-xs font-bold text-subText mb-4 tracking-wider uppercase">

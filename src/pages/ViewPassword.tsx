@@ -120,7 +120,7 @@ export default function ViewPassword() {
       </div>
 
       <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="mx-auto space-y-6">
           {/* PROFILE CARD */}
           <div className="flex flex-col items-center mb-8">
             <BrandIcon
