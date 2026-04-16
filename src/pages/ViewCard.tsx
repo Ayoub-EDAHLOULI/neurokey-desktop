@@ -99,7 +99,7 @@ export default function ViewCard() {
 
       {/* SCROLLABLE CONTENT */}
       <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="mx-auto space-y-6">
           {/* HERO CARD VISUAL */}
           <div className="flex justify-center mb-10 mt-4">
             <div className="w-full max-w-[400px]">
