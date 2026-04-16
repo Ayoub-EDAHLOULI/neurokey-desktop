@@ -11,10 +11,9 @@ let _storeInstance: Store | null = null;
 const getStore = async (): Promise<Store> => {
   if (!_storeInstance) {
     try {
-      _storeInstance = await load("neurokey_secure.dat", {
-        autoSave: false,
-        defaults: {},
-      });
+      // Remove the options object entirely.
+      // Tauri will default to autoSave: true with a 100ms debounce.
+      _storeInstance = await load("neurokey_secure.dat");
     } catch (error) {
       console.error("Failed to load Tauri store:", error);
       throw error;
@@ -60,7 +59,8 @@ export const saveSecureItem = async (
   try {
     const store = await getStore();
     await store.set(key, value);
-    await store.save();
+    // 🚨 REMOVED manual store.save() to prevent the OS file-locking race condition!
+    // Tauri will now automatically and safely save this in the background.
   } catch (error) {
     console.error(`Failed to save secure item (${key}):`, error);
   }
@@ -80,7 +80,7 @@ export const clearSecureStore = async (): Promise<void> => {
   try {
     const store = await getStore();
     await store.clear();
-    await store.save();
+    await store.save(); // It is safe to manually save here since it's a single wipe action
   } catch (error) {
     console.error("Failed to clear secure store:", error);
   }
