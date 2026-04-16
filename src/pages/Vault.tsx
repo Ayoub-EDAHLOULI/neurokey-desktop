@@ -3,10 +3,12 @@ import { Search, Plus, ChevronRight, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useVaultStore } from "../store/useVaultStore";
 import BrandIcon from "../components/BrandIcon";
+import { useNavigate } from "react-router-dom";
 
 export default function Vault() {
   const { items } = useVaultStore();
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const filteredData = items.filter(
     (item) =>
@@ -24,8 +26,7 @@ export default function Vault() {
         </h1>
         <button
           className="w-10 h-10 bg-primary hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors shadow-lg shadow-primary/30"
-          // We will wire up the add password modal later
-          onClick={() => console.log("Add clicked")}
+          onClick={() => navigate("/add-password")}
         >
           <Plus className="text-white w-6 h-6" />
         </button>
