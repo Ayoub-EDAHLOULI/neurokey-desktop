@@ -10,8 +10,8 @@ export default function About() {
   return (
     <div className="h-full w-full flex flex-col px-8 pb-8">
       {/* HEADER */}
-      <div className="flex justify-between items-center py-6 shrink-0 mt-4">
-        <h1 className="text-4xl font-bold text-text tracking-tight">
+      <div className="flex justify-between items-center py-3 shrink-0 mt-2">
+        <h1 className="text-3xl font-bold text-text tracking-tight">
           About Me
         </h1>
         <button
@@ -25,8 +25,8 @@ export default function About() {
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
         <div className="mx-auto pb-10 flex flex-col items-center">
           {/* PROFILE SECTION */}
-          <div className="flex flex-col items-center mt-6 mb-10">
-            <div className="w-32 h-32 rounded-full mb-6 shadow-xl shadow-primary/20 p-1 bg-gradient-to-tr from-primary to-purple-500">
+          <div className="flex flex-col items-center mt-4 mb-6">
+            <div className="w-24 h-24 rounded-full mb-4 shadow-xl shadow-primary/20 p-1 bg-gradient-to-tr from-primary to-purple-500">
               {!imageError ? (
                 <img
                   src="https://github.com/Ayoub-EDAHLOULI.png"
@@ -40,7 +40,7 @@ export default function About() {
                 </div>
               )}
             </div>
-            <h2 className="text-3xl font-bold text-text mb-2">
+            <h2 className="text-2xl font-bold text-text mb-2">
               Ayoub Edahlouli
             </h2>
             <p className="text-primary font-semibold text-lg tracking-wide">
@@ -49,7 +49,7 @@ export default function About() {
           </div>
 
           {/* BIO SECTION */}
-          <div className="bg-card border border-border rounded-3xl p-8 mb-10 shadow-sm w-full text-center">
+          <div className="bg-card border border-border rounded-3xl p-6 mb-6 shadow-sm w-full text-center">
             <p className="text-text text-lg leading-relaxed mb-4">
               I built <span className="font-bold text-primary">NeuroKey</span>{" "}
               because I needed a secure place for my own digital life—and I knew

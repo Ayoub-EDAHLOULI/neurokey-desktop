@@ -51,8 +51,8 @@ export default function SecurityTips() {
   return (
     <div className="h-full w-full flex flex-col px-8 pb-8">
       {/* HEADER */}
-      <div className="flex justify-between items-center py-6 shrink-0 mt-4">
-        <h1 className="text-4xl font-bold text-text tracking-tight">
+      <div className="flex justify-between items-center py-3 shrink-0 mt-2">
+        <h1 className="text-3xl font-bold text-text tracking-tight">
           Security Guide
         </h1>
         <button

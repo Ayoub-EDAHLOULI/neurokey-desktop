@@ -49,9 +49,9 @@ export default function BreachRadar() {
   return (
     <div className="h-full w-full flex flex-col px-8 pb-8">
       {/* HEADER */}
-      <div className="flex justify-between items-center py-6 shrink-0 mt-4">
+      <div className="flex justify-between items-center py-3 shrink-0 mt-2">
         <div>
-          <h1 className="text-4xl font-bold text-text tracking-tight">
+          <h1 className="text-3xl font-bold text-text tracking-tight">
             Breach Radar
           </h1>
           <p className="text-subText mt-2">

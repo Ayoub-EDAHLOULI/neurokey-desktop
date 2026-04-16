@@ -11,7 +11,7 @@ export default function SidebarLayout({
     <div className="h-screen w-screen bg-background flex overflow-hidden relative">
       <TitleBar />
 
-      <aside className="w-64 bg-card border-r border-border flex flex-col pt-8 z-40">
+      <aside className="w-56 bg-card border-r border-border flex flex-col pt-8 z-40 shrink-0">
         <div className="h-16 flex items-center px-6 border-b border-border shrink-0">
           <Shield className="text-primary w-6 h-6 mr-3" />
           <h1 className="text-lg font-bold text-text tracking-wide">

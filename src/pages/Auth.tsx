@@ -162,11 +162,11 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
     );
 
   return (
-    <div className="h-full w-full bg-background flex flex-col items-center justify-center p-6 relative">
+    <div className="h-full w-full bg-background flex flex-col items-center justify-center p-6 relative overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md shrink-0 my-auto"
       >
         {/* LOGO */}
         <div className="flex flex-col items-center mb-8 select-none">
