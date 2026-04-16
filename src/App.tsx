@@ -16,6 +16,8 @@ import EditPassword from "./pages/EditPassword";
 import AddCard from "./pages/AddCard";
 import ViewCard from "./pages/ViewCard";
 import EditCard from "./pages/EditCard";
+import SecurityTips from "./pages/SecurityTips";
+import About from "./pages/About";
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -47,6 +49,8 @@ export default function App() {
           <Route path="/add-card" element={<AddCard />} />
           <Route path="/view-card/:id" element={<ViewCard />} />
           <Route path="/edit-card/:id" element={<EditCard />} />
+          <Route path="/security-tips" element={<SecurityTips />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>
