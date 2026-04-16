@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { X, Globe, Mail, Gpu, ChevronRight } from "lucide-react";
+import { openUrl } from "@tauri-apps/plugin-opener";
 
 export default function About() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function About() {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="max-w-2xl mx-auto pb-10 flex flex-col items-center">
+        <div className="mx-auto pb-10 flex flex-col items-center">
           {/* PROFILE SECTION */}
           <div className="flex flex-col items-center mt-6 mb-10">
             <div className="w-32 h-32 rounded-full mb-6 shadow-xl shadow-primary/20 p-1 bg-gradient-to-tr from-primary to-purple-500">
@@ -67,11 +68,9 @@ export default function About() {
               Connect With Me
             </h3>
             <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm flex flex-col">
-              <a
-                href="https://ayoubedahlouli.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center px-6 py-4 border-b border-border hover:bg-inputBg transition-colors group"
+              <button
+                onClick={() => openUrl("https://ayoubedahlouli.com")}
+                className="flex items-center px-6 py-4 border-b border-border hover:bg-inputBg transition-colors group w-full text-left"
               >
                 <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center mr-4">
                   <Globe size={20} className="text-white" />
@@ -83,11 +82,11 @@ export default function About() {
                   size={20}
                   className="text-subText group-hover:text-primary transition-colors"
                 />
-              </a>
+              </button>
 
-              <a
-                href="mailto:ayoub.edahlouli@gmail.com"
-                className="flex items-center px-6 py-4 border-b border-border hover:bg-inputBg transition-colors group"
+              <button
+                onClick={() => openUrl("mailto:ayoub.edahlouli@gmail.com")}
+                className="flex items-center px-6 py-4 border-b border-border hover:bg-inputBg transition-colors group w-full text-left"
               >
                 <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center mr-4">
                   <Mail size={20} className="text-white" />
@@ -99,13 +98,11 @@ export default function About() {
                   size={20}
                   className="text-subText group-hover:text-primary transition-colors"
                 />
-              </a>
+              </button>
 
-              <a
-                href="https://github.com/Ayoub-EDAHLOULI"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center px-6 py-4 hover:bg-inputBg transition-colors group"
+              <button
+                onClick={() => openUrl("https://github.com/Ayoub-EDAHLOULI")}
+                className="flex items-center px-6 py-4 hover:bg-inputBg transition-colors group w-full text-left"
               >
                 <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center mr-4">
                   <Gpu size={20} className="text-white" />
@@ -117,7 +114,7 @@ export default function About() {
                   size={20}
                   className="text-subText group-hover:text-primary transition-colors"
                 />
-              </a>
+              </button>
             </div>
           </div>
 

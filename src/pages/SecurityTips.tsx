@@ -64,7 +64,7 @@ export default function SecurityTips() {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="max-w-2xl mx-auto pb-10">
+        <div className="mx-auto pb-10">
           <p className="text-subText text-lg mb-8 leading-relaxed">
             Protecting your digital life goes beyond just storing passwords.
             Here are essential habits to keep you safe online.

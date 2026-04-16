@@ -49,8 +49,8 @@ export default function App() {
           <Route path="/add-card" element={<AddCard />} />
           <Route path="/view-card/:id" element={<ViewCard />} />
           <Route path="/edit-card/:id" element={<EditCard />} />
-          <Route path="/security-tips" element={<SecurityTips />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/settings/security-tips" element={<SecurityTips />} />
+          <Route path="/settings/about" element={<About />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>

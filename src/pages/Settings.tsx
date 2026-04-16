@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Lock,
   Clock,
-  Cloud,
-  Download,
   ShieldCheck,
   User,
   Star,
@@ -13,9 +11,11 @@ import {
 import { useVaultStore } from "../store/useVaultStore";
 import { clearSecureStore } from "../core/encryption";
 import CustomAlert from "../components/CustomAlert";
+import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
   const { clearVault } = useVaultStore();
+  const navigate = useNavigate();
 
   // --- STATE ---
   const [autoLockTime, setAutoLockTime] = useState<string>("5");
@@ -152,44 +152,6 @@ export default function Settings() {
             </div>
           </section>
 
-          {/* SECTION 2: DATA */}
-          <section>
-            <h2 className="text-xs font-bold text-subText mb-3 tracking-wider uppercase ml-2">
-              Data & Export
-            </h2>
-            <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
-              <SettingRow
-                icon={Cloud}
-                color="bg-blue-500"
-                label="Encrypted Cloud Backup"
-                onClick={() =>
-                  setAlertConfig({
-                    visible: true,
-                    title: "Premium Feature",
-                    message: "Cloud sync requires a NeuroKey Pro subscription.",
-                    type: "info",
-                    buttons: [],
-                  })
-                }
-              />
-              <SettingRow
-                icon={Download}
-                color="bg-purple-500"
-                label="Export Vault (.csv)"
-                onClick={() =>
-                  setAlertConfig({
-                    visible: true,
-                    title: "Export",
-                    message:
-                      "CSV export functionality is currently under development.",
-                    type: "info",
-                    buttons: [],
-                  })
-                }
-              />
-            </div>
-          </section>
-
           {/* SECTION 3: ABOUT */}
           <section>
             <h2 className="text-xs font-bold text-subText mb-3 tracking-wider uppercase ml-2">
@@ -200,30 +162,13 @@ export default function Settings() {
                 icon={ShieldCheck}
                 color="bg-sky-500"
                 label="Security Architecture"
-                onClick={() =>
-                  setAlertConfig({
-                    visible: true,
-                    title: "Zero-Knowledge",
-                    message:
-                      "NeuroKey uses AES-256 encryption. We never see your master password.",
-                    type: "success",
-                    buttons: [],
-                  })
-                }
+                onClick={() => navigate("/settings/security-tips")}
               />
               <SettingRow
                 icon={User}
                 color="bg-fuchsia-500"
                 label="Developer Team"
-                onClick={() =>
-                  setAlertConfig({
-                    visible: true,
-                    title: "Hello!",
-                    message: "Built with passion by Ayoub Edahlouli.",
-                    type: "info",
-                    buttons: [],
-                  })
-                }
+                onClick={() => navigate("/settings/about")}
               />
               <SettingRow
                 icon={Star}
