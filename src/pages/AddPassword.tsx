@@ -141,37 +141,47 @@ export default function AddPassword() {
       </div>
 
       {/* SCROLLABLE FORM */}
-      <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
-        <div className="mx-auto space-y-8">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-6 custom-scrollbar">
+        <div className="mx-auto space-y-8 w-full min-w-0">
           {/* ICON PICKER */}
-          <section>
-            <h2 className="text-xs font-bold text-subText mb-4 tracking-wider uppercase ">
+          <section className="w-full min-w-0">
+            <h2 className="text-xs font-bold text-subText mb-4 tracking-wider uppercase">
               Choose Icon
             </h2>
-            <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
-              {/* If Favicon was found, show it as an option */}
+
+            <div className="flex flex-wrap gap-4 overflow-y-auto max-h-[170px] pb-2 pr-2 custom-scrollbar w-full items-start">
+              {/* Favicon Option */}
               {autoFavicon && (
                 <button
                   onClick={() => setSelectedIconId("favicon")}
-                  className="flex flex-col items-center gap-2 min-w-[70px]"
+                  className="flex flex-col items-center gap-2 w-[70px]"
                 >
                   <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${selectedIconId === "favicon" ? "bg-card border-2 border-primary" : "bg-card border border-border"}`}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all overflow-hidden ${
+                      selectedIconId === "favicon"
+                        ? "bg-card border-2 border-primary shadow-md shadow-primary/20"
+                        : "bg-card border border-border hover:border-subText"
+                    }`}
                   >
                     <img
                       src={autoFavicon}
                       alt="Favicon"
-                      className="w-8 h-8 rounded-md"
+                      className="w-8 h-8 max-w-[32px] max-h-[32px] object-contain rounded-md"
                     />
                   </div>
                   <span
-                    className={`text-xs ${selectedIconId === "favicon" ? "text-text font-bold" : "text-subText"}`}
+                    className={`text-xs truncate w-full text-center transition-colors ${
+                      selectedIconId === "favicon"
+                        ? "text-text font-bold"
+                        : "text-subText"
+                    }`}
                   >
                     Website
                   </span>
                 </button>
               )}
 
+              {/* Brand Icons */}
               {BRAND_ICONS.map((brand) => {
                 const isSelected = selectedIconId === brand.id;
                 return (
@@ -181,21 +191,36 @@ export default function AddPassword() {
                       setSelectedIconId(brand.id);
                       setSelectedColor(brand.color);
                     }}
-                    className="flex flex-col items-center gap-2 min-w-[70px]"
+                    className="flex flex-col items-center gap-2 w-[70px] group"
                   >
                     <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all"
+                      className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
+                        !isSelected &&
+                        "border border-border group-hover:border-subText"
+                      }`}
                       style={{
-                        backgroundColor: isSelected ? brand.color : undefined,
-                        border: isSelected ? "none" : "1px solid var(--border)",
+                        backgroundColor: isSelected
+                          ? brand.color
+                          : "var(--card)",
+                        boxShadow: isSelected
+                          ? `0 4px 12px ${brand.color}40`
+                          : "none",
                       }}
                     >
                       <brand.Icon
-                        className={`w-6 h-6 ${isSelected ? "text-white" : "text-subText"}`}
+                        className={`w-6 h-6 transition-colors ${
+                          isSelected
+                            ? "text-white"
+                            : "text-subText group-hover:text-text"
+                        }`}
                       />
                     </div>
                     <span
-                      className={`text-xs ${isSelected ? "text-text font-bold" : "text-subText"}`}
+                      className={`text-xs truncate w-full text-center transition-colors ${
+                        isSelected
+                          ? "text-text font-bold"
+                          : "text-subText group-hover:text-text"
+                      }`}
                     >
                       {brand.name}
                     </span>
