@@ -47,7 +47,7 @@ export default function CreditCard({
       </div>
 
       <div className="relative z-10">
-        <p className="text-white text-2xl tracking-[0.2em] font-semibold drop-shadow-md">
+        <p className="text-white text-xl tracking-[0.15em] font-semibold drop-shadow-md">
           {formatNumber(number)}
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function CreditCard({
           <p className="text-white/70 text-[10px] tracking-widest font-semibold mb-1">
             CARD HOLDER
           </p>
-          <p className="text-white font-bold tracking-wide uppercase drop-shadow-sm">
+          <p className="text-white font-bold tracking-wide uppercase drop-shadow-sm truncate max-w-[160px]">
             {holder}
           </p>
         </div>

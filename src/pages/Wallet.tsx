@@ -37,7 +37,7 @@ export default function Wallet() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-6 pb-6">
             <AnimatePresence>
               {cards.map((item) => (
                 <motion.div
