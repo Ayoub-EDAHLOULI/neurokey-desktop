@@ -153,11 +153,6 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
 
   return (
     <div className="h-full w-full bg-background flex flex-col items-center justify-center p-6 relative">
-      <div
-        data-tauri-drag-region
-        className="absolute top-0 left-0 w-full h-8 z-50"
-      />
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
