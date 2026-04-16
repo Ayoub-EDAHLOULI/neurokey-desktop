@@ -47,7 +47,7 @@ export default function Vault() {
       </div>
 
       {/* 3. LIST OF PASSWORDS */}
-      <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto custom-scrollbar">
         {filteredData.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full opacity-60">
             <ShieldCheck className="w-16 h-16 text-subText mb-4" />
