@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useVaultStore } from "../store/useVaultStore";
 import CustomAlert from "../components/CustomAlert";
-import { getFaviconUrl } from "../components/BrandIcon";
+import { getFaviconUrl } from "../core/helpers";
 
 const BRAND_ICONS = [
   { id: "amazon", name: "Amazon", Icon: ShoppingCart, color: "#FF9900" },
@@ -142,10 +142,10 @@ export default function AddPassword() {
 
       {/* SCROLLABLE FORM */}
       <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
-        <div className=" mx-auto space-y-8">
+        <div className="mx-auto space-y-8">
           {/* ICON PICKER */}
           <section>
-            <h2 className="text-xs font-bold text-subText mb-4 tracking-wider uppercase">
+            <h2 className="text-xs font-bold text-subText mb-4 tracking-wider uppercase ">
               Choose Icon
             </h2>
             <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
