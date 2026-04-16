@@ -17,6 +17,7 @@ import {
   getSecureItem,
   generateSalt,
   clearSecureStore,
+  persistVault,
 } from "../core/encryption";
 
 // Mocking the router navigate function for now
@@ -98,9 +99,14 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
       const token = encryptData("VALID_TOKEN", key);
 
       if (token) {
+        // Queue the data in memory...
         await saveSecureItem("user_email", formData.email);
         await saveSecureItem("vault_salt", salt);
         await saveSecureItem("vault_validation", token);
+
+        // Lock it to the hard drive in ONE clean operation!
+        await persistVault();
+
         onUnlock();
       }
     } else {
