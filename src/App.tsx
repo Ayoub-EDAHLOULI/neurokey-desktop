@@ -12,6 +12,7 @@ import Settings from "./pages/Settings";
 import AddPassword from "./pages/AddPassword";
 import ViewPassword from "./pages/ViewPassword";
 import EditPassword from "./pages/EditPassword";
+import AddCard from "./pages/AddCard";
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/add-password" element={<AddPassword />} />
           <Route path="/view-password/:id" element={<ViewPassword />} />
           <Route path="/edit-password/:id" element={<EditPassword />} />
+          <Route path="/add-card" element={<AddCard />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>
