@@ -119,7 +119,7 @@ export default function Settings() {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="max-w-3xl space-y-8 mt-2 pb-10">
+        <div className="space-y-8 mt-2 pb-10">
           {/* SECTION 1: SECURITY */}
           <section>
             <h2 className="text-xs font-bold text-subText mb-3 tracking-wider uppercase ml-2">
