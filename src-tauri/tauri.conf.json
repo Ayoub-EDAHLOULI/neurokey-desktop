@@ -15,6 +15,8 @@
         "title": "neurokey-desktop",
         "width": 1124,
         "height": 768,
+        "minWidth": 800,
+        "minHeight": 600,
         "decorations": false
       }
     ],
