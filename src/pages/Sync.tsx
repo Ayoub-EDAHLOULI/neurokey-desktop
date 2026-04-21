@@ -3,14 +3,38 @@ import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
 import { Smartphone, Wifi, ShieldCheck, RefreshCw } from "lucide-react";
 import QRCode from "react-qr-code";
-import { useVaultStore } from "../store/useVaultStore";
+import { useVaultStore, VaultItem } from "../store/useVaultStore";
+
+// THE SMART MERGE LOGIC
+const smartMerge = (localVault: VaultItem[], remoteVault: VaultItem[]) => {
+  const mergedMap = new Map();
+
+  localVault.forEach((item) => mergedMap.set(item.id, item));
+
+  remoteVault.forEach((remoteItem) => {
+    const localItem = mergedMap.get(remoteItem.id);
+
+    if (!localItem) {
+      mergedMap.set(remoteItem.id, remoteItem);
+    } else {
+      const localTime = localItem.updated_at || localItem.created_at || 0;
+      const remoteTime = remoteItem.updated_at || remoteItem.created_at || 0;
+
+      if (remoteTime > localTime) {
+        mergedMap.set(remoteItem.id, remoteItem);
+      }
+    }
+  });
+
+  return Array.from(mergedMap.values()) as VaultItem[];
+};
 
 export default function Sync() {
   const [connectionString, setConnectionString] = useState<string>("");
   const [isError, setIsError] = useState(false);
-  const [, setSyncSuccess] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState(false);
 
-  const { setItems, items } = useVaultStore(); // Grab current vault
+  const { setItems, items } = useVaultStore();
 
   const fetchIpAddress = async () => {
     try {
@@ -26,23 +50,20 @@ export default function Sync() {
   useEffect(() => {
     fetchIpAddress();
 
-    // 👇 Listen for incoming data from the Rust backend
+    // 1. Seed the Desktop vault into the Rust Server so it can reply to the phone
+    invoke("seed_desktop_vault", { vault: items });
+
+    // 2. Listen for the Mobile payload
     const unlisten = listen("vault-sync-received", (event: any) => {
       console.log("Got data from mobile!", event.payload);
 
       const mobileItems = event.payload.items;
 
       if (mobileItems && Array.isArray(mobileItems)) {
-        // For now, we will just merge the arrays (Desktop + Mobile)
-        // In the future, we will add conflict resolution based on timestamps
-        const mergedVault = [...items, ...mobileItems];
+        // Run the Smart Merge!
+        const mergedVault = smartMerge(items, mobileItems);
 
-        // Remove exact duplicates by ID just in case
-        const uniqueVault = Array.from(
-          new Map(mergedVault.map((item) => [item.id, item])).values(),
-        );
-
-        setItems(uniqueVault as any);
+        setItems(mergedVault); // Overwrite Zustand AND save securely
         setSyncSuccess(true);
       }
     });
@@ -132,6 +153,18 @@ export default function Sync() {
                 <p className="text-subText text-sm">
                   Could not detect your local IP address. Are you connected to
                   Wi-Fi?
+                </p>
+              </div>
+            ) : syncSuccess ? (
+              <div className="text-center p-6 flex flex-col items-center animate-in fade-in zoom-in duration-500">
+                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                  <ShieldCheck className="text-green-500 w-10 h-10" />
+                </div>
+                <p className="text-green-500 font-bold text-xl mb-2">
+                  Vault Synced!
+                </p>
+                <p className="text-subText text-sm">
+                  Your desktop and mobile vaults are now identical.
                 </p>
               </div>
             ) : connectionString ? (
