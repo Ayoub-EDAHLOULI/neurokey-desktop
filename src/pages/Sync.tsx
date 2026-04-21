@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
+import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
 import { Smartphone, Wifi, ShieldCheck, RefreshCw } from "lucide-react";
 import QRCode from "react-qr-code";
+import { useVaultStore } from "../store/useVaultStore";
 
 export default function Sync() {
   const [connectionString, setConnectionString] = useState<string>("");
   const [isError, setIsError] = useState(false);
+  const [, setSyncSuccess] = useState(false);
+
+  const { setItems, items } = useVaultStore(); // Grab current vault
 
   const fetchIpAddress = async () => {
     try {
       setIsError(false);
-      // Call the Rust function to get the connection string (which includes the local IP and a random token)
       const ip = await invoke<string>("get_sync_connection_string");
       setConnectionString(ip);
     } catch (error) {
@@ -21,7 +25,32 @@ export default function Sync() {
 
   useEffect(() => {
     fetchIpAddress();
-  }, []);
+
+    // 👇 Listen for incoming data from the Rust backend
+    const unlisten = listen("vault-sync-received", (event: any) => {
+      console.log("Got data from mobile!", event.payload);
+
+      const mobileItems = event.payload.items;
+
+      if (mobileItems && Array.isArray(mobileItems)) {
+        // For now, we will just merge the arrays (Desktop + Mobile)
+        // In the future, we will add conflict resolution based on timestamps
+        const mergedVault = [...items, ...mobileItems];
+
+        // Remove exact duplicates by ID just in case
+        const uniqueVault = Array.from(
+          new Map(mergedVault.map((item) => [item.id, item])).values(),
+        );
+
+        setItems(uniqueVault as any);
+        setSyncSuccess(true);
+      }
+    });
+
+    return () => {
+      unlisten.then((f) => f());
+    };
+  }, [items, setItems]);
 
   return (
     <div className="h-full w-full flex flex-col px-8 pb-8">
