@@ -19,6 +19,7 @@ import ViewCard from "./pages/ViewCard";
 import EditCard from "./pages/EditCard";
 import SecurityTips from "./pages/SecurityTips";
 import About from "./pages/About";
+import Sync from "./pages/Sync";
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -101,6 +102,7 @@ export default function App() {
           <Route path="/edit-card/:id" element={<EditCard />} />
           <Route path="/settings/security-tips" element={<SecurityTips />} />
           <Route path="/settings/about" element={<About />} />
+          <Route path="/sync" element={<Sync />} />
         </Routes>
       </SidebarLayout>
     </BrowserRouter>

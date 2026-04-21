@@ -1,4 +1,11 @@
-import { Shield, CreditCard, Radar, Settings, Sparkles } from "lucide-react";
+import {
+  Shield,
+  CreditCard,
+  Radar,
+  Settings,
+  Sparkles,
+  RefreshCw,
+} from "lucide-react";
 import { NavLink } from "react-router-dom";
 import TitleBar from "../components/TitleBar";
 
@@ -37,6 +44,11 @@ export default function SidebarLayout({
             to="/radar"
             icon={<Radar size={20} />}
             label="Breach Radar"
+          />
+          <NavItem
+            to="/sync"
+            icon={<RefreshCw size={20} />}
+            label="Device Sync"
           />
         </nav>
 
