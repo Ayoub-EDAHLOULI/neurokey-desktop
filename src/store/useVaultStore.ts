@@ -20,12 +20,13 @@ export interface VaultItem {
   icon?: string;
   color?: string;
   created_at: number;
+  updated_at: number;
 }
 
 interface VaultStore {
   items: VaultItem[];
   setItems: (items: VaultItem[]) => void;
-  addItem: (item: Omit<VaultItem, "id" | "created_at">) => void;
+  addItem: (item: Omit<VaultItem, "id" | "created_at" | "updated_at">) => void;
   updateItem: (id: string, updates: Partial<VaultItem>) => void;
   deleteItem: (id: string) => void;
   clearVault: () => void;
@@ -34,14 +35,24 @@ interface VaultStore {
 export const useVaultStore = create<VaultStore>((set) => ({
   items: [],
 
-  setItems: (items) => set({ items }),
+  // Actually save the merged data to the encrypted hard drive!
+  setItems: (newItems) =>
+    set(() => {
+      saveSecureItem("vault_data", JSON.stringify(newItems)).then(persistVault);
+      return { items: newItems };
+    }),
 
   addItem: (item) =>
     set((state) => {
-      const newItem = { id: uuidv4(), created_at: Date.now(), ...item };
+      const now = Date.now();
+      const newItem = {
+        id: uuidv4(),
+        created_at: now,
+        updated_at: now,
+        ...item,
+      };
       const newItems = [newItem, ...state.items];
 
-      // 1. Fire and forget: Save the new array to the hard drive
       saveSecureItem("vault_data", JSON.stringify(newItems)).then(persistVault);
 
       return { items: newItems };
@@ -50,10 +61,10 @@ export const useVaultStore = create<VaultStore>((set) => ({
   updateItem: (id, updates) =>
     set((state) => {
       const newItems = state.items.map((i) =>
-        i.id === id ? { ...i, ...updates } : i,
+        // Inject the new updated_at timestamp on every edit
+        i.id === id ? { ...i, ...updates, updated_at: Date.now() } : i,
       );
 
-      // Sync update to hard drive
       saveSecureItem("vault_data", JSON.stringify(newItems)).then(persistVault);
 
       return { items: newItems };
@@ -62,10 +73,7 @@ export const useVaultStore = create<VaultStore>((set) => ({
   deleteItem: (id) =>
     set((state) => {
       const newItems = state.items.filter((i) => i.id !== id);
-
-      // Sync deletion to hard drive
       saveSecureItem("vault_data", JSON.stringify(newItems)).then(persistVault);
-
       return { items: newItems };
     }),
 
