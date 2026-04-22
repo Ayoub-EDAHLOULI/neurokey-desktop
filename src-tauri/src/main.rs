@@ -69,6 +69,7 @@ fn main() {
     let shared_vault = Arc::new(Mutex::new(json!([])));
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .manage(SharedVault(shared_vault.clone())) // Give Tauri access to it
         .setup(|app| {
             let app_handle = app.handle().clone();
