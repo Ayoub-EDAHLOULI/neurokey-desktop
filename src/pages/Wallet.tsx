@@ -9,7 +9,7 @@ export default function Wallet() {
   const { items } = useVaultStore();
 
   // Filter only items with the type "card"
-  const cards = items.filter((item) => item.type === "card");
+  const cards = items.filter((item) => item.type === "card" && !item.isDeleted);
 
   return (
     <div className="h-full w-full flex flex-col px-8 pb-8">
