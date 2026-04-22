@@ -198,8 +198,12 @@ export default function Auth({ onUnlock }: { onUnlock: () => void }) {
       >
         {/* LOGO */}
         <div className="flex flex-col items-center mb-8 select-none">
-          <div className="w-20 h-20 bg-gradient-to-br from-primary to-purple-500 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 mb-4">
-            <Lock className="text-white w-10 h-10" />
+          <div className="w-20 h-20 rounded-2xl overflow-hidden mb-4 ring-1 ring-white/15 shadow-[0_0_28px_8px_rgba(10,132,255,0.35)]">
+            <img
+              src="/logo.png"
+              alt="NeuroKey"
+              className="w-full h-full object-cover"
+            />
           </div>
           <h1 className="text-3xl font-bold text-text tracking-tight">
             Neuro<span className="text-primary">Key</span>
