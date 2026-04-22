@@ -21,6 +21,7 @@ export interface VaultItem {
   color?: string;
   created_at: number;
   updated_at: number;
+  isDeleted?: boolean;
 }
 
 interface VaultStore {
@@ -72,7 +73,12 @@ export const useVaultStore = create<VaultStore>((set) => ({
 
   deleteItem: (id) =>
     set((state) => {
-      const newItems = state.items.filter((i) => i.id !== id);
+      // Turn the item into a Tombstone
+      const newItems = state.items.map((i) =>
+        i.id === id ? { ...i, isDeleted: true, updated_at: Date.now() } : i,
+      );
+
+      // Save the array (including the tombstones) to the encrypted hard drive
       saveSecureItem("vault_data", JSON.stringify(newItems)).then(persistVault);
       return { items: newItems };
     }),

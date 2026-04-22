@@ -50,19 +50,22 @@ export default function Sync() {
   useEffect(() => {
     fetchIpAddress();
 
-    // 1. Seed the Desktop vault into the Rust Server so it can reply to the phone
-    invoke("seed_desktop_vault", { vault: items });
+    // Seed Rust Memory Bank with current vault items on component mount
+    if (items) {
+      console.log(`Pushing ${items.length} items to Rust Memory Bank...`);
+      invoke("seed_desktop_vault", { vault: items })
+        .then(() => console.log("✅ Successfully seeded Rust Server!"))
+        .catch((err) => console.error("❌ Failed to seed Rust:", err));
+    }
 
-    // 2. Listen for the Mobile payload
+    // Listen for incoming vault data from mobile app
     const unlisten = listen("vault-sync-received", (event: any) => {
       console.log("Got data from mobile!", event.payload);
 
       const mobileItems = event.payload.items;
 
       if (mobileItems && Array.isArray(mobileItems)) {
-        // Run the Smart Merge!
         const mergedVault = smartMerge(items, mobileItems);
-
         setItems(mergedVault); // Overwrite Zustand AND save securely
         setSyncSuccess(true);
       }
