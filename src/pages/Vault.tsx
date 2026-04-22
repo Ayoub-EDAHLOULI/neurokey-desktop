@@ -12,6 +12,7 @@ export default function Vault() {
 
   const filteredData = items.filter(
     (item) =>
+      !item.isDeleted &&
       item.type === "password" &&
       (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.email?.toLowerCase().includes(searchQuery.toLowerCase())),
