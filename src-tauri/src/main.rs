@@ -7,7 +7,7 @@ use serde_json::{json, Value};
 use std::net::SocketAddr;
 use std::sync::{Arc, Mutex};
 use tower_http::cors::CorsLayer;
-use tauri::{AppHandle, Emitter, Manager};
+use tauri::{AppHandle, Emitter};
 
 // 1. Create a thread-safe storage for the Desktop's vault
 struct SharedVault(Arc<Mutex<Value>>);
