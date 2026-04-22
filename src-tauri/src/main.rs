@@ -20,12 +20,11 @@ fn get_sync_connection_string() -> Result<String, String> {
     }
 }
 
-// 2. NEW: React calls this right before showing the QR code to seed the memory bank
+// 2. React calls this right before showing the QR code to seed the memory bank
 #[tauri::command]
 fn seed_desktop_vault(vault: Value, state: tauri::State<SharedVault>) {
     let mut v = state.0.lock().unwrap();
     *v = vault;
-    println!("✅ Desktop vault loaded into Rust memory bank.");
 }
 
 // 3. UPDATED: Receives mobile data AND returns desktop data!
